@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "git 입성"
+date:   2020-08-18 18:00:29 +0900
+category: My way
+---
+오늘 티스토리에서 git으로 갈아탔다. 
+한 2시간 걸린거 같다. 이 글이 정상적으로 push가 되는데 까지.......
+
+예전부터 git으로 옮기려는 마음도 있었고 필요성도 느꼈는데 나의 개으름으로 인해
+이제서야 옮겼다.
+
+{% highlight ruby %}
+until be data analysist!
+{% endhighlight %}
+

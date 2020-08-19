@@ -1,0 +1,38 @@
+---
+layout: post
+title: 전처리) indexing 후 null 값에 값 넣기
+date: 2020-08-18 19:20:23 +0900
+categories: python 전처리
+---
+# df[df[column] == 1] = value 와 같은 코드는 잘못된 코드!
+
+indexing 후에 값을 넣으려면 어떻게 해야 할까?
+
+위의 코드를 실행하면 오류가 뜬다
+
+"왜 이런 경고를 발생시킬까요? 번거롭기만 하고 별 이득은 없는 validation인 것 같은데 말이지요. 
+그렇지 않습니다. 매우 중요한 역할을 하는 경고입니다. Pandas DataFrame은 연쇄적인(chained) 연산과 처리를 허용합니다. 
+SQL에서 테이블을 SELECT한 결과가 다시 테이블이 되어 다시 SELECT할 수 있는 것과 유사하게, DataFrame도 그런 성질을 띱니다. 
+이것이 관계형 데이터베이스의 closure에 해당하는 개념인 것이죠.
+Pandas에서는 파생 DataFrame에 수정을 가하는 것을 권장하지 않습니다.(그래서 경고를 띄우는 것이죠.) 
+대신 Pandas는 copy() 메서드를 통해 파생 DataFrame에 독립적인 메모리를 부여한 뒤 여기에 수정을 가하도록 유도하지요. 
+view를 실질화(materialization)시키는 것이죠.
+요컨대 SettingWithCopyWarning의 발생을 예방하기 위한 가장 쉬운 방법은 파생 DataFrame에 copy() 메서드를 실행해, 
+원천 DataFrame과 별도인 메모리 공간을 파생 DataFrame에 부여하는 것입니다. 
+
+{% highlight %}
+해결방안 : indexing한 부분을 copy()로 생성한다음 바꿀 것.
+{% highlight %}
+
+예시 : 
+
+df_positive = df[df.NUM >= 0].copy()
+df_positive['SQUARED'] = df_positive.NUM ** 2
+
+print(df_positive)
+#    NUM  SQUARED
+# 2    5       25
+# 3    9       81
+# 4    7       49
+# 7    4       16
+# 9    6       36
